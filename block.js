@@ -7,11 +7,4 @@ class Block {
 	}
 }
 
-const block1 = new Block({
-	hash: "hash",
-	data: "data",
-	timestamp: "01/01/01",
-	lastHash: "last-hash",
-});
-
-console.log("block1", block1);
+module.exports = Block;
