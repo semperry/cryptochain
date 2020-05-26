@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+
 import Block from "./Block";
 
 const Blocks = () => {
@@ -19,7 +21,11 @@ const Blocks = () => {
 
 	return (
 		<div>
-			{console.log("blocks", blocks)}
+			<div>
+				<Link exact to="/">
+					Home
+				</Link>
+			</div>
 			<h3>Blocks</h3>
 			{renderBlocks()}
 		</div>
