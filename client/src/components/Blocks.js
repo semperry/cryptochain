@@ -7,7 +7,7 @@ const Blocks = () => {
 	const [blocks, setBlocks] = useState([]);
 
 	useEffect(() => {
-		fetch("http://localhost:3000/api/blocks")
+		fetch(`${document.location.origin}/api/blocks`)
 			.then((res) => res.json())
 			.then((data) => setBlocks(data))
 			.catch((err) => console.error(err));

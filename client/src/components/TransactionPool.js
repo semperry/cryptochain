@@ -3,11 +3,13 @@ import { Link } from "react-router-dom";
 
 import Transaction from "./Transaction";
 
+const POLL_INTERVAL_MS = 10000;
+
 const TransactionPool = () => {
 	const [transactionPoolMap, setTransactionPoolMap] = useState({});
 
 	const fetchTransactionPoolMap = () => {
-		fetch("http://localhost:3000/api/transaction-pool-map")
+		fetch(`${document.location.origin}/api/transaction-pool-map`)
 			.then((res) => res.json())
 			.then((data) => setTransactionPoolMap(data))
 			.catch((err) => console.error(err));
@@ -15,6 +17,11 @@ const TransactionPool = () => {
 
 	useEffect(() => {
 		fetchTransactionPoolMap();
+		const poolInterval = setInterval(() => {
+			fetchTransactionPoolMap();
+		}, POLL_INTERVAL_MS);
+
+		return () => clearInterval(poolInterval);
 	}, []);
 
 	return (

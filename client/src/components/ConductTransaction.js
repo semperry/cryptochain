@@ -9,7 +9,7 @@ const ConductTransaction = () => {
 	const [amount, setAmount] = useState(0);
 
 	const handleSubmit = () => {
-		fetch("http://localhost:3000/api/transact", {
+		fetch(`${document.location.origin}/api/transact`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
