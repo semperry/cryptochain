@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
+import history from "../history";
 import Transaction from "./Transaction";
 
 const POLL_INTERVAL_MS = 10000;
@@ -13,6 +15,17 @@ const TransactionPool = () => {
 			.then((res) => res.json())
 			.then((data) => setTransactionPoolMap(data))
 			.catch((err) => console.error(err));
+	};
+
+	const handleMining = () => {
+		fetch(`${document.location.origin}/api/mine-transactions`).then((res) => {
+			if (res.status === 200) {
+				alert("success");
+				history.push("/blocks");
+			} else {
+				alert("The mine-transactions block request did not complete.");
+			}
+		});
 	};
 
 	useEffect(() => {
@@ -38,6 +51,10 @@ const TransactionPool = () => {
 					</div>
 				);
 			})}
+			<hr />
+			<Button bsStyle="danger" onClick={handleMining}>
+				Mine the Transactions
+			</Button>
 		</div>
 	);
 };
