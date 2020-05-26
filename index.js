@@ -13,7 +13,7 @@ const isDevelopment = process.env.ENV === "development";
 const DEFAULT_PORT = 3000;
 const ROOT_NODE_ADDRESS = `http://localhost:${DEFAULT_PORT}`;
 const REDIS_URL = isDevelopment
-	? "redis://127.0.0.1/6379"
+	? "redis://localhost:6379"
 	: "redis://h:p25d0b3b04741154070104219ebb2577c4ad2543837bca91f958d5c3ecbef761d@ec2-54-210-231-101.compute-1.amazonaws.com:21559";
 
 const app = express();
@@ -94,6 +94,20 @@ app.get("/api/wallet-info", (req, res) => {
 			address,
 		}),
 	});
+});
+
+app.get("/api/known-addresses", (req, res) => {
+	const addressMap = {};
+
+	for (let block of blockchain.chain) {
+		for (let transaction of block.data) {
+			const recipient = Object.keys(transaction.outputMap);
+
+			recipient.forEach((recipient) => (addressMap[recipient] = recipient));
+		}
+	}
+
+	res.json(Object.keys(addressMap));
 });
 
 app.get("*", (req, res) => {
