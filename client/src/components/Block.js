@@ -19,6 +19,7 @@ const Block = (props) => {
 
 		return (
 			<div>
+				<div>Data: {dataDisplay}</div>
 				{displayTransaction ? (
 					<div>
 						{data.map((transaction) => (
