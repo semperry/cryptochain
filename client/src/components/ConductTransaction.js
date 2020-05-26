@@ -1,10 +1,28 @@
 import React, { useState } from "react";
-import { FormGroup, FormControl } from "react-bootstrap";
+import { FormGroup, FormControl, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const ConductTransaction = () => {
 	const [recipient, setRecipient] = useState("");
 	const [amount, setAmount] = useState(0);
+
+	const handleSubmit = () => {
+		fetch("http://localhost:3000/api/transact", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify({
+				recipient,
+				amount,
+			}),
+		})
+			.then((res) => res.json())
+			.then((data) => {
+				alert(data.message || data.type);
+			})
+			.catch((err) => console.error(err));
+	};
 
 	return (
 		<div className="ConductTransaction">
@@ -26,6 +44,11 @@ const ConductTransaction = () => {
 					onChange={(e) => setAmount(e.target.value)}
 				/>
 			</FormGroup>
+			<div>
+				<Button bsStyle="danger" onClick={handleSubmit}>
+					Submit
+				</Button>
+			</div>
 		</div>
 	);
 };
