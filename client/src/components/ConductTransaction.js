@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { FormGroup, FormControl, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
+import history from "../history";
+
 const ConductTransaction = () => {
 	const [recipient, setRecipient] = useState("");
 	const [amount, setAmount] = useState(0);
@@ -20,6 +22,7 @@ const ConductTransaction = () => {
 			.then((res) => res.json())
 			.then((data) => {
 				alert(data.message || data.type);
+				history.push("/transaction-pool");
 			})
 			.catch((err) => console.error(err));
 	};
